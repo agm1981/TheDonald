@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Policy;
+using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -11,10 +12,10 @@ namespace DonaldTracker
 {
     public class ForumWorker
     {
-        public void PostTweet(string tweet)
+        public void PostTweet(string tweet, string tweetText)
         {
             FiresOfHeavenSite site = new FiresOfHeavenSite();
-            Task r = site.PostTweet(tweet);
+            Task r = site.PostTweet(tweet, tweetText);
             Task.WaitAll(r);
         }
     }
@@ -81,8 +82,8 @@ namespace DonaldTracker
 
         protected internal async Task<HttpResponseMessage> StartSessionAsync(HttpClient wc)
         {
-            const string username = "";
-            const string password = "";
+            const string username = "Donald Trump";
+            const string password = "MAGA2017";
 
             var formContent = new FormUrlEncodedContent(new[] {
                 new KeyValuePair<string, string>("login", username),
@@ -145,7 +146,7 @@ namespace DonaldTracker
         //    }
         //}
 
-        public async Task PostTweet(string tweet)
+        public async Task PostTweet(string tweet, string tweetText)
         {
             using (HttpClient wc = SetupClient())
             {
@@ -153,7 +154,7 @@ namespace DonaldTracker
                 HttpResponseMessage logged = await StartSessionAsync(wc);
 
                 string html = await logged.Content.ReadAsStringAsync();
-                HtmlDocument doc =new HtmlDocument();
+                HtmlDocument doc = new HtmlDocument();
                 doc.LoadHtml(html);
                 string token = null;
                 List<HtmlNode> inputs = doc.DocumentNode.SelectNodes("//input").ToList();
@@ -164,18 +165,20 @@ namespace DonaldTracker
                         token = htmlNode.Attributes["value"].Value;
                         break;
                     }
-                    
+
                 }
-                HttpResponseMessage mediaData = await PostInner(wc, tweet, token);
+                HttpResponseMessage mediaData = await PostTweetInner(wc, tweet, token, tweetText);
+                Thread.Sleep(new TimeSpan(0, 0, 40));
+                HttpResponseMessage postData = await PostProfilePost(wc, tweet, token, tweetText);
             }
         }
 
-        public async Task<HttpResponseMessage> PostInner(HttpClient wc, string tweetId, string token)
+        public async Task<HttpResponseMessage> PostTweetInner(HttpClient wc, string tweetId, string token, string tweetText)
         {
             var formContent = new FormUrlEncodedContent(new[] {
-                new KeyValuePair<string, string>("message_html", $"<p>[MEDIA=twitter]{tweetId}[/MEDIA]</p>"),
+                new KeyValuePair<string, string>("message_html", $"<p>[MEDIA=twitter]{tweetId}[/MEDIA]</p><br /> <p>{tweetText}</p>"),
                 new KeyValuePair<string, string>("_xfRelativeResolver", "https://www.firesofheaven.org/threads/politics-thread.7113/page-10117"),
-                
+
                 new KeyValuePair<string, string>("last_date", ToUnixTimestamp(DateTime.UtcNow).ToString()),
                 new KeyValuePair<string, string>("last_known_date", ToUnixTimestamp(DateTime.UtcNow).ToString()),
                 new KeyValuePair<string, string>("_xfToken", token),
@@ -185,7 +188,24 @@ namespace DonaldTracker
                 new KeyValuePair<string, string>("_xfResponseType", "json")
             });
             HttpResponseMessage result = await wc.PostAsync("https://www.firesofheaven.org/threads/politics-thread.7113/add-reply", formContent);
-            
+
+            return result;
+
+
+        }
+
+        public async Task<HttpResponseMessage> PostProfilePost(HttpClient wc, string tweetId, string token, string tweetText)
+        {
+            var formContent = new FormUrlEncodedContent(new[] {
+                new KeyValuePair<string, string>("message", $"{tweetText}"),
+                new KeyValuePair<string, string>("_xfToken", token),
+                new KeyValuePair<string, string>("simple", "1"),
+                new KeyValuePair<string, string>("_xfRequestUri", "/"),
+                new KeyValuePair<string, string>("_xfNoRedirect", "1"),
+                new KeyValuePair<string, string>("_xfResponseType", "json")//donald-trump.10192
+            });
+            HttpResponseMessage result = await wc.PostAsync("https://www.firesofheaven.org/members/donald-trump.10192/post", formContent);
+
             return result;
 
 

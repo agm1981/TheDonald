@@ -15,20 +15,25 @@ namespace DonaldTracker
         {
             // Ok first is get all tweets
             TweeterFetcher tf = new TweeterFetcher();
-            List<string> tweets = tf.GetLastTweets().OrderBy(c=>c.Id).Select(c => c.IdStr).ToList();
-            // get all already published tweets
-            List<string> data = File.ReadAllLines("publishedTweets.txt").ToList();
+            List<ITweet> tweets = tf.GetLastTweets().OrderBy(c => c.Id).ToList();
 
-            List<string> dataToPublish = tweets.Except(data).OrderBy(c=>c).ToList();
-            
-            foreach (string tweetId in dataToPublish)
+            // get all already published tweets
+            var data = File.ReadAllLines("publishedTweets.txt").ToList();
+
+            var dataToPublish = tweets.Where(c => data.All(v => v != c.IdStr)).OrderBy(c => c.Id).ToList();
+
+            foreach (ITweet tweetId in dataToPublish)
             {
                 ForumWorker fw = new ForumWorker();
-                fw.PostTweet(tweetId);
-                File.AppendAllLines("publishedTweets.txt", new List<string>{ tweetId});
+                fw.PostTweet(tweetId.IdStr, tweetId.FullText);
+                File.AppendAllLines("publishedTweets.txt", new List<string>{ tweetId.IdStr
+    });
                 Thread.Sleep(new TimeSpan(0, 0, 40));
             }
 
+        }
+
+        internal class teew{
         }
     }
 }
