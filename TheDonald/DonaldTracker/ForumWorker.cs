@@ -168,8 +168,8 @@ namespace DonaldTracker
 
                 }
                 HttpResponseMessage mediaData = await PostTweetInner(wc, tweet, token, tweetText);
-                Thread.Sleep(new TimeSpan(0, 0, 40));
-                HttpResponseMessage postData = await PostProfilePost(wc, tweet, token, tweetText);
+                //Thread.Sleep(new TimeSpan(0, 0, 40));
+                //HttpResponseMessage postData = await PostProfilePost(wc, tweet, token, tweetText);
             }
         }
 
