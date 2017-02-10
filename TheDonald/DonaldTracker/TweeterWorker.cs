@@ -20,20 +20,41 @@ namespace DonaldTracker
             // get all already published tweets
             var data = File.ReadAllLines("publishedTweets.txt").ToList();
 
-            var dataToPublish = tweets.Where(c => data.All(v => v != c.IdStr)).OrderBy(c => c.Id).ToList();
+            List<ITweet> dataToPublish = tweets.Where(c => data.All(v => v != c.IdStr)).OrderBy(c => c.Id).ToList();
+            ForumWorker fw = new ForumWorker();
+            fw.PostTweets(
+                dataToPublish.Select(c => new TweetData
+                {
+                    FullText = c.FullText,
+                    TweetId = c.IdStr
+                }));
+                
 
-            foreach (ITweet tweetId in dataToPublish)
-            {
-                ForumWorker fw = new ForumWorker();
-                fw.PostTweet(tweetId.IdStr, tweetId.FullText);
-                File.AppendAllLines("publishedTweets.txt", new List<string>{ tweetId.IdStr
-    });
+            
+                File.AppendAllLines("publishedTweets.txt", dataToPublish.Select(c=>c.IdStr));
                 Thread.Sleep(new TimeSpan(0, 0, 40));
-            }
+            
 
         }
 
-        internal class teew{
+        
+    }
+    public class TweetData
+    {
+        public string TweetId
+        {
+            get;
+            set;
+        }
+        public string FullText
+        {
+            get;
+            set;
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(TweetId)}: {TweetId}, {nameof(FullText)}: {FullText}";
         }
     }
 }

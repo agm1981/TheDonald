@@ -21,7 +21,7 @@ namespace DonaldTracker
         public static void StartProcess()
         {
             timer.Elapsed += TimerOnElapsed;
-            timer.Interval = new TimeSpan(0, 1, 0).TotalMilliseconds;
+            timer.Interval = new TimeSpan(0, 0, 4).TotalMilliseconds;
             timer.Start();
         }
 

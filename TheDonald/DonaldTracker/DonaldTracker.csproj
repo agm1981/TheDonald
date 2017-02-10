@@ -83,7 +83,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessTokenExpiring.cs" />
     <Compile Include="CookieExpiring.cs" />
+    <Compile Include="FiresOfHeavenSite.cs" />
     <Compile Include="ForumWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
