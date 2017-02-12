@@ -30,7 +30,7 @@ namespace DonaldTracker
             return Cookie.Count > 0 && DateTime.UtcNow - date < timeToLive;
         }
 
-        private TimeSpan timeToLive = TimeSpan.Minutes(10);
+        private TimeSpan timeToLive = TimeSpan.FromMinutes(10);
         private DateTime date;
     }
 }

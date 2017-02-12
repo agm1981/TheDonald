@@ -85,7 +85,7 @@ namespace DonaldTracker
                 new KeyValuePair<string, string>("client_id", apiKey),
                 new KeyValuePair<string, string>("client_secret", apiSecret),
                 new KeyValuePair<string, string>("username", "Donald Trump"),
-                new KeyValuePair<string, string>("password", "MAGA2017")
+                new KeyValuePair<string, string>("password", "MAGA2020")
             });
             HttpResponseMessage result = await wc.PostAsync(UrlLogin, formContent);
             //string code = result.Content.ReadAsStringAsync().Result;
@@ -118,7 +118,7 @@ namespace DonaldTracker
         public async Task<HttpResponseMessage> PostTweetInner(HttpClient wc, string tweetId, string tweetText, string bearerToken)
         {
             wc.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
-            int threadid = 8379;//7113;
+            int threadid = 7113;
             //outerPost post = new outerPost
             //{
             //    post = new FohPost
@@ -129,7 +129,7 @@ namespace DonaldTracker
             //};
 
             // donald is 10192
-            int forum_id = 20;
+            //int forum_id = 20;
 
             var formContent = new FormUrlEncodedContent(new[] {
                 new KeyValuePair<string, string>("thread_id", threadid.ToString()),
