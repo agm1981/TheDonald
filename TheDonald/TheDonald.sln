@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonaldTracker", "DonaldTracker\DonaldTracker.csproj", "{D6823794-3D99-4233-8269-D515E5775FBA}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "TheDonaldCloud", "TheDonaldCloud\TheDonaldCloud.ccproj", "{011536BB-818A-48FD-9577-4DC5D08B3C23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheDonaldWorker", "TheDonaldWorker\TheDonaldWorker.csproj", "{AC302487-AC6A-4E8D-A793-0109E85C996B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D6823794-3D99-4233-8269-D515E5775FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6823794-3D99-4233-8269-D515E5775FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6823794-3D99-4233-8269-D515E5775FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{011536BB-818A-48FD-9577-4DC5D08B3C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011536BB-818A-48FD-9577-4DC5D08B3C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011536BB-818A-48FD-9577-4DC5D08B3C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011536BB-818A-48FD-9577-4DC5D08B3C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC302487-AC6A-4E8D-A793-0109E85C996B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC302487-AC6A-4E8D-A793-0109E85C996B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC302487-AC6A-4E8D-A793-0109E85C996B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC302487-AC6A-4E8D-A793-0109E85C996B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
